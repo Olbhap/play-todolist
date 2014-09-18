@@ -12,7 +12,7 @@ object Application extends Controller {
 	val taskForm = Form(
   		"label" -> nonEmptyText
 	)
-
+	def index = Action{Redirect(routes.Application.tasks)}
  	
 	def tasks = Action {
  	 Ok(views.html.index(Task.all(), taskForm))
