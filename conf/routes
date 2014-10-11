@@ -5,8 +5,16 @@
 # Home page
 GET     /                           controllers.Application.index
 
+# ALL tareas: Devuelve una colección JSON con la lista de tareas.
 GET     /tasks                      controllers.Application.tasks
+
+# GET tarea: Devuelve la representación JSON de la tarea cuyo identificador se pasa en la URI.
+#GET	  /tasks/:id
+
+# Add tarea
 POST    /tasks                      controllers.Application.newTask
+
+# Delete Tarea: 
 GET     /tasks/:id/delete           controllers.Application.deleteTask(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
