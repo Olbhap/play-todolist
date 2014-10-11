@@ -4,12 +4,12 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import play.api.libs.json._
+import play.api.libs.functional.syntax._
 import models.Task
 
 
 object Application extends Controller {
-
-	
 	val taskForm = Form(
 	    mapping(
 	    	"id" -> ignored(None:Option[Long]),
@@ -17,10 +17,24 @@ object Application extends Controller {
 	      "task_user" -> nonEmptyText
 	    )(Task.apply)(Task.unapply)
   )
+
+	implicit val taskWrites: Writes[Task] = (
+	  (JsPath \ "id").write[Option[Long]] and (JsPath \ "label").write[String] and
+	  (JsPath \ "task_user").write[String]
+	)(unlift(Task.unapply))
+
 	def index = Action{Redirect(routes.Application.tasks)}
  	
 	def tasks = Action {
- 	 Ok(views.html.index(Task.all(), taskForm))
+	 val json_lista_task = Json.toJson(Task.all())
+	 Ok(json_lista_task)
+	}
+
+	def task(id: Long) = Action {
+		val json_task = Json.toJson(Task.getById(id))
+		Ok(json_task)
+
+
 	}
 
 	def newTask = Action { implicit request =>
@@ -28,13 +42,15 @@ object Application extends Controller {
 	    errors => BadRequest(views.html.index(Task.all(), errors)),
 	    task_user => {
 	      Task.create(task_user)
-	      Redirect(routes.Application.tasks)
+	      Created(Json.toJson(task_user))
 	    }
 	  )
 	}
 
 	def deleteTask(id: Long) = Action {
-	  Task.delete(id)
-	  Redirect(routes.Application.tasks)
+	  if(Task.delete(id)==0)
+	  		NotFound
+	  	else
+	  		Ok
 	}
 }

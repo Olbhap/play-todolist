@@ -16,8 +16,13 @@ object Task{
 	    case id~label~task_user => Task(id, label,task_user)
 	  }
 	}
+	
 	def all(): List[Task] = DB.withConnection { implicit c =>
 	  SQL("select * from task").as(task *)
+	}
+
+	def getById(id: Long) = DB.withConnection{ implicit c=>
+		SQL("select * from task where id = {id}").on('id -> id).as(task *)
 	}
 
 	def create(task: Task) {

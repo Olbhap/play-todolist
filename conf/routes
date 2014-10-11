@@ -9,13 +9,13 @@ GET     /                           controllers.Application.index
 GET     /tasks                      controllers.Application.tasks
 
 # GET tarea: Devuelve la representación JSON de la tarea cuyo identificador se pasa en la URI.
-#GET	  /tasks/:id
+GET	  /tasks/:id                 controllers.Application.task(id: Long)
 
 # Add tarea
 POST    /tasks                      controllers.Application.newTask
 
 # Delete Tarea: 
-GET     /tasks/:id/delete           controllers.Application.deleteTask(id: Long)
+DELETE     /tasks/:id          controllers.Application.deleteTask(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
