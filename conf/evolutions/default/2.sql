@@ -17,5 +17,17 @@ insert into task_user (login) values ('apple');
 insert into task_user (login) values ('madslover');
 insert into task_user (login) values ('restfulswagger');
 
+
+insert into task (label, task_user) values('Hacer la compra','pablogil');
+insert into task (label, task_user) values('Terminar la practica','pablogil');
+insert into task (label, task_user) values('Sacar un 10 en MADS','pablogil');
+insert into task (label, task_user) values('Hacer un poquito de peloteo, que nunca viene mal','pablogil');
+insert into task (label, task_user) values('Prueba 1','domingogallardo');
+insert into task (label, task_user) values('Prueba 2','domingogallardo');
+insert into task (label, task_user) values('Evaluaciones','domingogallardo');
+insert into task (label, task_user) values('Rest, rest everywhere','restfulswagger');
+insert into task (label, task_user) values('Will it blend','apple');
+
+
 # --- !Downs 
 DROP TABLE task_user;

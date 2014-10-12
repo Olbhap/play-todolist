@@ -48,9 +48,9 @@ object Application extends Controller {
 	}
 
 	def deleteTask(id: Long) = Action {
-	  if(Task.delete(id)==0)
-	  		NotFound
-	  	else
-	  		Ok
+		if(Task.delete(id)==0)
+	   	NotFound;
+	   else
+	   	Ok;
 	}
 }

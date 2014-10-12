@@ -34,11 +34,12 @@ object Task{
 	  }
 	}
 
-	def delete(id: Long) {
+	def delete(id: Long): Int= {
 	  DB.withConnection { implicit c =>
-	    SQL("delete from task where id = {id}").on(
-	      'id -> id
-	    ).executeUpdate()
+	     SQL("delete from task where id = {id}").on('id -> id).executeUpdate()	        
+	  } match {
+	  		case int => return(int)
 	  }
+	  
 	}
 }
