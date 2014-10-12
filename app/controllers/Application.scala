@@ -33,8 +33,6 @@ object Application extends Controller {
 	def task(id: Long) = Action {
 		val json_task = Json.toJson(Task.getById(id))
 		Ok(json_task)
-
-
 	}
 
 	def newTask = Action { implicit request =>
@@ -45,6 +43,11 @@ object Application extends Controller {
 	      Created(Json.toJson(task_user))
 	    }
 	  )
+	}
+
+	def tasksUser(login: String) = Action {
+		val json_tasks = Json.toJson(Task.getByUser(login))
+		Ok(json_tasks)
 	}
 
 	def deleteTask(id: Long) = Action {
