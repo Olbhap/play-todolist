@@ -22,7 +22,7 @@ object Task{
 	}
 
 	def getByUser(login: String): List[Task] = DB.withConnection { implicit c =>
-	  SQL("select * from task where task_user = {login}").as(task *)
+	  SQL("select * from task where task_user = {login}").on('login -> login).as(task *)
 	}
 
 	def getById(id: Long) = DB.withConnection{ implicit c=>

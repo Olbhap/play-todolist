@@ -8,6 +8,9 @@ GET     /                           controllers.Application.index
 # ALL tareas: Devuelve una colección JSON con la lista de tareas.
 GET     /tasks                      controllers.Application.tasks
 
+# Get Tareas de un User
+GET     /:login/tasks            controllers.Application.tasksUser(login: String)
+
 # GET tarea: Devuelve la representación JSON de la tarea cuyo identificador se pasa en la URI.
 GET	  /tasks/:id                 controllers.Application.task(id: Long)
 
