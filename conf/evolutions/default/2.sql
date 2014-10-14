@@ -16,6 +16,7 @@ insert into task_user (login) values ('pepito');
 insert into task_user (login) values ('apple');
 insert into task_user (login) values ('madslover');
 insert into task_user (login) values ('restfulswagger');
+insert into task_user (login) values ('anon');
 
 
 insert into task (label, task_user) values('Hacer la compra','pablogil');
@@ -27,6 +28,7 @@ insert into task (label, task_user) values('Prueba 2','domingogallardo');
 insert into task (label, task_user) values('Evaluaciones','domingogallardo');
 insert into task (label, task_user) values('Rest, rest everywhere','restfulswagger');
 insert into task (label, task_user) values('Will it blend','apple');
+insert into task (label, task_user) values('Mensaje anonimo1','anon');
 
 
 # --- !Downs 

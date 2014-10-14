@@ -26,7 +26,7 @@ object Application extends Controller {
 	def index = Action{Redirect(routes.Application.tasks)}
  	
 	def tasks = Action {
-	 val json_lista_task = Json.toJson(Task.all())
+	 val json_lista_task = Json.toJson(Task.getByUser("anon"))
 	 Ok(json_lista_task)
 	}
 
@@ -45,9 +45,26 @@ object Application extends Controller {
 	  )
 	}
 
+	def newTaskUser(login: String) = Action { implicit request =>
+	  taskForm.bindFromRequest.fold(
+	    errors => BadRequest(views.html.index(Task.all(), errors)),
+	    task_user => {	    	
+	      Task.create(task_user)
+	      Created(Json.toJson(task_user))
+	    }
+	  )
+	}	
+
 	def tasksUser(login: String) = Action {
-		val json_tasks = Json.toJson(Task.getByUser(login))
-		Ok(json_tasks)
+		val taskList = Task.getByUser(login)
+		if(taskList.isEmpty)
+			NotFound
+		else
+		{
+			Ok(Json.toJson(taskList))
+		}
+
+		
 	}
 
 	def deleteTask(id: Long) = Action {

@@ -17,6 +17,9 @@ GET	  /tasks/:id                 controllers.Application.task(id: Long)
 # Add tarea
 POST    /tasks                      controllers.Application.newTask
 
+# Add tarea by user
+POST    /:login/tasks                      controllers.Application.newTaskUser(login: String)
+
 # Delete Tarea: 
 DELETE     /tasks/:id          controllers.Application.deleteTask(id: Long)
 
