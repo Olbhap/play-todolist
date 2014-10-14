@@ -14,6 +14,8 @@ GET     /:login/tasks            controllers.Application.tasksUser(login: String
 # GET tarea: Devuelve la representación JSON de la tarea cuyo identificador se pasa en la URI.
 GET	  /tasks/:id                 controllers.Application.task(id: Long)
 
+    
+
 # Add tarea
 POST    /tasks                      controllers.Application.newTask
 
@@ -22,6 +24,7 @@ POST    /:login/tasks                      controllers.Application.newTaskUser(l
 
 # Delete Tarea: 
 DELETE     /tasks/:id          controllers.Application.deleteTask(id: Long)
+
 
 
 # Map static resources from the /public folder to the /assets URL path
