@@ -14,7 +14,11 @@ GET     /:login/tasks            controllers.Application.tasksUser(login: String
 # GET tarea: Devuelve la representación JSON de la tarea cuyo identificador se pasa en la URI.
 GET	  /tasks/:id                 controllers.Application.task(id: Long)
 
-    
+# Get tarea - usuario - fecha: Devuelve todas las tareas sin finalizar a partir de una fecha (dd-MM-yyyy) y de un usuario en JSON 
+GET    /:login/:fecha/tasks      controllers.Application.taskUserCustomDate(login: String, fecha: String)  
+
+# Get tarea - usuario - fecha: Devuelve todas las tareas sin finalizar a partir de una fecha y de un usuario en JSON 
+GET    /:login/tasks/now      controllers.Application.taskUserDate(login: String)    
 
 # Add tarea
 POST    /tasks                      controllers.Application.newTask

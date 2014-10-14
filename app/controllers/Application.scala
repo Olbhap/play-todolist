@@ -60,15 +60,32 @@ object Application extends Controller {
 
 	def tasksUser(login: String) = Action {
 		val taskList = Task.getByUser(login)
-		println(taskList.last.end_date.toString);
+		if(taskList.isEmpty)
+			NotFound
+		else
+		{
+			Ok(Json.toJson(taskList))
+		}		
+	}
+
+	def taskUserCustomDate(login: String, fecha: String) = Action {
+		val taskList = Task.getByUserCustomDate(login, fecha)
 		if(taskList.isEmpty)
 			NotFound
 		else
 		{
 			Ok(Json.toJson(taskList))
 		}
+	}
 
-		
+	def taskUserDate(login: String) = Action {
+		val taskList = Task.getByUserDate(login)
+		if(taskList.isEmpty)
+			NotFound
+		else
+		{
+			Ok(Json.toJson(taskList))
+		}
 	}
 
 	def deleteTask(id: Long) = Action {

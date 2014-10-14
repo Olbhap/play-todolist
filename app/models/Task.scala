@@ -3,6 +3,7 @@ import anorm._
 import anorm.SqlParser._
 import play.api.db._
 import play.api.Play.current
+import java.text.SimpleDateFormat
 import java.util.{Date}
 
 case class Task(id: Option[Long] = None, label: String, task_user: String, end_date: Option[Date])
@@ -25,6 +26,19 @@ object Task{
 
 	def getByUser(login: String): List[Task] = DB.withConnection { implicit c =>
 	  SQL("select * from task where task_user = {login}").on('login -> login).as(task *)
+	}
+
+	def getByUserCustomDate(login: String, fecha: String): List[Task] = 
+	DB.withConnection { 
+		val date_parse = new SimpleDateFormat("dd-MM-yyyy").parse(fecha)
+		implicit c =>
+	  SQL("select * from task where task_user = {login} and end_date > {date_parse}").on('login -> login, 'date_parse -> date_parse).as(task *)
+	}
+
+	def getByUserDate(login: String): List[Task] = 
+	DB.withConnection { 
+		implicit c =>
+	  SQL("select * from task where task_user = {login} and end_date > NOW()").on('login -> login).as(task *)
 	}
 
 	def getById(id: Long) = DB.withConnection{ implicit c=>
