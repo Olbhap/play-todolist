@@ -14,34 +14,34 @@ Funcionalidades
 
 > - **GET**
 > - Devuelve una colección *JSON* con la lista de tareas del usuario sin registrar: *Anon*
-> - No requiere ningún parámetro. Invoca a la función *controllers.Application.tasks* (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - No requiere ningún parámetro. Invoca a la función *controllers.Application.tasks* (vease la sección [Controlador](#Controlador))
 
 > **/:login/tasks  **
 
 > - **GET**
 > - Devuelve una colección *JSON* con la lista de tareas del usuario :login.
-> - Recibe un **string** :login con el nombre del usuario. Invoca a la función *controllers.Application.tasksUser* (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - Recibe un **string** :login con el nombre del usuario. Invoca a la función *controllers.Application.tasksUser* (vease la sección [ Controlador](#Controlador))
 > - Si el usuario no existe, devolverá **404** de status code. **200** en el caso de que si exista
 
 > **/tasks/:id **
 
 > - **GET**
 > - Devuelve un objeto *JSON*  de una tarea según su :ID.
-> - Recibe un long **:id** con el ID de la tarea. Invoca a la función *controllers.Application.tasks* con el parámetro ID (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - Recibe un long **:id** con el ID de la tarea. Invoca a la función *controllers.Application.tasks* con el parámetro ID (vease la sección [ Controlador](#Controlador))
 > - Devuelve **200** en el caso de que exista
 
 > **/:login/:fecha/tasks ** - Función propia de *Feature3*
 
 > - **GET**
 > - Devuelve todas las tareas sin finalizar a partir de una fecha en formato *(dd-MM-yyyy)* y de un usuario.
-> - Recibe un String **:login** y un String **:fecha** en el formato mencionado. Invoca a la función *controllers.Application.taskUserCustomDate* (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - Recibe un String **:login** y un String **:fecha** en el formato mencionado. Invoca a la función *controllers.Application.taskUserCustomDate* (vease la sección [ Controlador](#Controlador))
 > - Devuelve **200** en el caso de que existan tareas, **404** en caso contrario
 
 > **/:login/tasks/now ** - Función propia de *Feature3*
 
 > - **GET**
 > - Devuelve todas las tareas sin finalizar a partir de la fecha del sistema y de un usuario
-> - Recibe un String **:login** y un String **:fecha** en el formato mencionado. Invoca a la función *controllers.Application.taskUserCustomDate* (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - Recibe un String **:login** y un String **:fecha** en el formato mencionado. Invoca a la función *controllers.Application.taskUserCustomDate* (vease la sección [ Controlador](#Controlador))
 > - Devuelve **200** en el caso de que existan tareas, **404** en caso contrario
 
 ---
@@ -49,14 +49,14 @@ Funcionalidades
 
 > - **POST**
 > - Crea una nueva tarea
-> - No recibe ningún parámetro, por lo que creará la tarea en el usuario 'Anon'. Invoca a la función *controllers.Application.newTasks* (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - No recibe ningún parámetro, por lo que creará la tarea en el usuario 'Anon'. Invoca a la función *controllers.Application.newTasks* (vease la sección [ Controlador](#Controlador))
 > - Devuelve **201** si todo fue correctamente.
 
 > **/:login/tasks** 
 
 > - **POST**
 > - Crea una nueva tarea asignada a un usuario
-> - Recibe un String **:login** . Invoca a la función *controllers.Application.newTaskUser* (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - Recibe un String **:login** . Invoca a la función *controllers.Application.newTaskUser* (vease la sección [ Controlador](#Controlador))
 > - Devuelve **201** si todo fue correctamente.
 
 ---
@@ -64,7 +64,7 @@ Funcionalidades
 
 > - **DELETE**
 > - Elimina una tarea por ID
-> - Recibe un long **:id** con el ID de la tarea. Invoca a la función *controllers.Application.newTasks* (vease la sección [<i class="icon-refresh"></i> Controlador](#Controlador))
+> - Recibe un long **:id** con el ID de la tarea. Invoca a la función *controllers.Application.newTasks* (vease la sección [ Controlador](#Controlador))
 > - Devuelve **201** si todo fue correctamente.
 
 
@@ -74,7 +74,7 @@ Controlador
 
 En el controlador de la aplicación definiremos todas las funciones a las que el fichero routes enlaza, además de declarar los **Writer** del objeto JSON que devolvemos en la mayoría de las funciones GET.
 
-#### <i class="icon-pencil"></i> JSON
+####  JSON
 
 El objeto JSON está determinado por lo siguiente:
 
