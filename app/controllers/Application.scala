@@ -8,7 +8,7 @@ import play.api.libs.json._
 import play.api.libs.functional.syntax._
 import java.util.{Date}
 import java.text.SimpleDateFormat
-import models.Task
+import models._
 
 
 object Application extends Controller {
@@ -38,25 +38,19 @@ object Application extends Controller {
 		Ok(json_task)
 	}
 
-	def newTask = Action { implicit request =>
-	  taskForm.bindFromRequest.fold(
-	    errors => BadRequest(views.html.index(Task.all(), errors)),
-	    task_user => {
-	      Task.create(task_user)
-	      Created(Json.toJson(task_user))
-	    }
-	  )
-	}
+	 def newTask = newTaskUser("anonymous")
 
-	def newTaskUser(login: String) = Action { implicit request =>
-	  taskForm.bindFromRequest.fold(
-	    errors => BadRequest(views.html.index(Task.all(), errors)),
-	    task_user => {	    	
-	      Task.create(task_user)
-	      Created(Json.toJson(task_user))
-	    }
-	  )
-	}	
+	 def newTaskUser(user: String) = Action { implicit request =>
+     taskForm.bindFromRequest.fold(
+       errors => BadRequest("Error en la peticion"),
+       taskData => if (User.exists(taskData.task_user)) {
+                   val id: Long = Task.create(taskData.label, taskData.task_user, taskData.end_date)
+                   val task = Task.getById(id)
+                   Created(Json.toJson(Task.getById(id)))
+                }
+                else BadRequest("Error: No existe el propietario de la tarea: " + taskData.task_user)
+     )
+   }
 
 	def tasksUser(login: String) = Action {
 		val taskList = Task.getByUser(login)

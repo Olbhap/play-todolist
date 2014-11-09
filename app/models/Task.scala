@@ -45,15 +45,19 @@ object Task{
 		SQL("select * from task where id = {id}").on('id -> id).as(task *)
 	}
 
-	def create(task: Task) {
-	  DB.withConnection { implicit c =>
-	    SQL("insert into task (label,task_user, end_date) values ({label}, {task_user}, {end_date})").on(
-	      'label -> task.label,
-	      'task_user -> task.task_user,
-	      'end_date -> task.end_date
-	    ).executeUpdate()
-	  }
-	}
+	def create(label: String, task_user: String, end_date: Option[Date] = None): Long = {
+      DB.withConnection { implicit c =>
+         val id: Option[Long]  = 
+            SQL("insert into task (label, task_user, end_date) values ({label}, {task_user},{end_date})").on(
+               'label -> label,
+               'task_user -> task_user,
+               'end_date -> end_date
+            ).executeInsert()
+
+         //Devolvemos -1 si el insert devuelve None
+         id.getOrElse(-1)
+     }
+   }
 
 	
 
