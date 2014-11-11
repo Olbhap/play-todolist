@@ -8,8 +8,6 @@ import java.util.{Date}
 
 case class Task(id: Option[Long] = None, label: String, task_user: String, end_date: Option[Date])
 
-
-
 object Task{
 		val task = {
 	  get[Option[Long]]("id") ~ 
@@ -57,9 +55,7 @@ object Task{
          //Devolvemos -1 si el insert devuelve None
          id.getOrElse(-1)
      }
-   }
-
-	
+   }	
 
 	def delete(id: Long): Int= {
 	  DB.withConnection { implicit c =>

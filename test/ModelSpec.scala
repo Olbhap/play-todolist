@@ -45,7 +45,7 @@ class ModelSpec extends Specification {
         
       }
     }
-
+    
     "delete if exists" in {
         running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
         val id = Task.create("tarea a borrar","pablogil");
@@ -53,9 +53,41 @@ class ModelSpec extends Specification {
 
         Task.delete(id);
         val recuperar = Task.getById(id);
-        recuperar must have length(0);
+        recuperar must have length(0); //si se intenta recuperar, se recuperará una lista vacia
       }
     }
+
+
+     "retrieve by custom date" in {
+        running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+          val tasks = Task.getByUserCustomDate("pablogil","11-10-2013");
+
+          //Según nuestra base de datos, deberá aparecer 2 tareas
+          tasks must have length(2);
+        }
+      }
+
+
+      "retrieve by login" in {
+        running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+          val tasks = Task.getByUser("domingogallardo");
+
+          //Según nuestra base de datos, deberá aparecer 3 tareas
+          tasks must have length(3);
+        }
+      }
+
+
+      "retrieve by login NOW" in {
+        running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+          val tasks = Task.getByUserDate("pablogil");
+
+          //Según nuestra base de datos, deberá aparecer 1 tareas
+          tasks must have length(1);
+        }
+      }
+    
+
     
     /*"be listed along its companies" in {
       running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
