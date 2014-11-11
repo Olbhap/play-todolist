@@ -68,12 +68,12 @@ class ModelSpec extends Specification {
       }
 
 
-      "retrieve by login" in {
+      "retrieve by user" in {
         running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
           val tasks = Task.getByUser("domingogallardo");
 
-          //Según nuestra base de datos, deberá aparecer 3 tareas
-          tasks must have length(3);
+          //Según nuestra base de datos, deberá aparecer 4 tareas
+          tasks must have length(4);
         }
       }
 
@@ -113,6 +113,50 @@ class ModelSpec extends Specification {
       }
     }
     */
+  }
+
+  "Categoria model" should {
+    "retrieve by categoria 1" in {
+        running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+          val tasks = Task.getByUserCat("pablogil", 1);
+
+          //Según nuestra base de datos, deberá aparecer 2 tareas
+          tasks must have length(2);
+        }
+      }
+
+      "retrieve by categoria 2" in {
+        running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+          val tasks = Task.getByUserCat("domingogallardo", 2);
+
+          //Según nuestra base de datos, deberá aparecer 1 tarea
+          tasks must have length(1);
+        }
+      }
+
+      "create and retrieve by id" in {
+      running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+        //val fecha = new Date(2014,06,13);
+        val id = Categoria.create("Categoria de pruebas","pablogil");
+        val cat = Categoria.getById(id).head; //getById devuelve una lista      
+      
+        cat.nombre must equalTo("Categoria de pruebas");
+        cat.task_user must equalTo("pablogil"); 
+        
+      }
+    }
+
+    "delete if exists" in {
+        running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+        val id = Categoria.create("Categoria de pruebas","pablogil");
+        val cat = Categoria.getById(id).head;
+
+        Categoria.delete(id);
+        val recuperar = Categoria.getById(id);
+        recuperar must have length(0); //si se intenta recuperar, se recuperará una lista vacia
+      }
+    }
+
   }
   
 }

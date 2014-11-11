@@ -62,7 +62,12 @@ object Task{
 	     SQL("delete from task where id = {id}").on('id -> id).executeUpdate()	        
 	  } match {
 	  		case int => return(int)
-	  }
-	  
+	  }	  
 	}
+
+   def getByUserCat(login: String, categoria: Long): List[Task] = 
+   DB.withConnection { 
+      implicit c =>
+     SQL("select * from task where task_user = {login} and task_categoria = {categoria}").on('login -> login, 'categoria -> categoria).as(task *)
+   }
 }

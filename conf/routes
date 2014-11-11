@@ -28,9 +28,14 @@ POST    /:login/tasks                      controllers.Application.newTaskUser(l
 
 # Delete Tarea: 
 DELETE     /tasks/:id          controllers.Application.deleteTask(id: Long)
+# Delete Tarea: 
+DELETE     /categoria/:id          controllers.Application.deleteTask(id: Long)
 
+# Get tareas por usuario y categoria
+GET     /categoria/:login/:categoria    controllers.Application.taskUserCat(login: String, categoria: Long)
 
-# Get tareas por
+# Create una categoria
+POST   /:login/categoria       controllers.Application.newCategoria(login: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

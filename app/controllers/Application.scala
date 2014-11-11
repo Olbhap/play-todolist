@@ -20,11 +20,23 @@ object Application extends Controller {
 	      "end_date" -> optional(date)
 	    )(Task.apply)(Task.unapply)
   )
+
+	val catForm = Form(
+	    mapping(
+	    	"id" -> ignored(None:Option[Long]),
+	      "nombre" -> nonEmptyText,
+	      "task_user" -> nonEmptyText	      
+	    )(Categoria.apply)(Categoria.unapply)
+  )
 	
 	implicit val taskWrites: Writes[Task] = (
 	  (JsPath \ "id").write[Option[Long]] and (JsPath \ "label").write[String] and
 	  (JsPath \ "task_user").write[String] and (__ \ "end_date").write[Option[Date]]
-	)(unlift(Task.unapply))
+	)   (unlift(Task.unapply))
+
+	implicit val categoriaWrites: Writes[Categoria] = (
+	  (JsPath \ "id").write[Option[Long]] and (JsPath \ "nombre").write[String] and
+	  (JsPath \ "task_user").write[String])  (unlift(Categoria.unapply))
 
 	def index = Action{Redirect(routes.Application.tasks)}
  	
@@ -91,4 +103,35 @@ object Application extends Controller {
 	   else
 	   	Ok;
 	}
+
+	def deleteCat(id: Long) = Action {
+		if(Categoria.delete(id)==0)
+	   	NotFound;
+	   else
+	   	Ok;
+	}
+
+	def taskUserCat(login: String, categoria: Long) = Action {
+		val taskList = Task.getByUserCat(login, categoria)
+		if(taskList.isEmpty)
+			NotFound
+		else
+		{
+			Ok(Json.toJson(taskList))
+		}
+	}
+
+	def newCategoria(login: String)  = Action { implicit request =>
+     catForm.bindFromRequest.fold(
+       errors => BadRequest("Error en la peticion"),
+       catData =>       
+       if (User.exists(login)) {
+       				
+                   val id: Long = Categoria.create(catData.nombre, catData.task_user)
+                   val cate = Categoria.getById(id)
+                   Created(Json.toJson(cate))
+                }
+                else BadRequest("Error: No existe el propietario de la tarea: " + catData.task_user)
+     )
+   }
 }
