@@ -17,6 +17,7 @@ insert into task_user (login) values ('apple');
 insert into task_user (login) values ('madslover');
 insert into task_user (login) values ('restfulswagger');
 insert into task_user (login) values ('anon');
+insert into task_user (login) values ('anonymous');
 
 
 insert into task (label, task_user) values('Hacer la compra','pablogil');
