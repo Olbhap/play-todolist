@@ -41,9 +41,12 @@ object Application extends Controller {
 	 def newTask = newTaskUser("anonymous")
 
 	 def newTaskUser(user: String) = Action { implicit request =>
+	 	println(user);
      taskForm.bindFromRequest.fold(
        errors => BadRequest("Error en la peticion"),
-       taskData => if (User.exists(taskData.task_user)) {
+       taskData =>       
+       if (User.exists(taskData.task_user)) {
+       				println(taskData.label + " " + user)
                    val id: Long = Task.create(taskData.label, taskData.task_user, taskData.end_date)
                    val task = Task.getById(id)
                    Created(Json.toJson(Task.getById(id)))
