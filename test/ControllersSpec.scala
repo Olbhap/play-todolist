@@ -163,6 +163,43 @@ class ControllersTests extends Specification with JsonMatchers {
         status(result3) must equalTo(BAD_REQUEST) //no se introduce usuario en el formulario (pero la url es /<user>/tasks)  
         }
       }
+
+
+       "Tareas que pertenecen a un usuario y una categoria formato JSON con un GET /categoria/<login>/<categoria> " in {
+      running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+
+            val usuario = "pablogil"
+            val catId = 1
+            
+            val listaTareas = route(FakeRequest(GET,"/categoria/"+usuario+"/"+catId)).get
+            val resultJson = contentAsJson(listaTareas)         
+            val resultString = Json.stringify(resultJson) 
+            
+            resultJson match {  
+              case arr: JsArray => arr.value.length === 2 //comprobamos que sean 3 el length del js, ya que tenemos en la DB 2 tareas en esa categoria
+              case _ => throw new Exception("json returned must be an array but it isn't")
+            }
+ 
+            status(listaTareas) must equalTo(OK)
+            contentType(listaTareas) must beSome.which(_ == "application/json")
+
+            //   /#(index) accede al json 'index' del array (0-based)            
+            resultString must /#(0) /("label" -> "Intentar hacer que funcionen las categorias")   
+            resultString must /#(1) /("label" -> "Comprobar las categorias") 
+         }
+      }
+
+      "Create CATEGORIA by POST /<user>/tasks" in {  
+      running(FakeApplication(additionalConfiguration = inMemoryDatabase())) {
+        val usuario = "pablogil"
+        val Some(result) = route(  
+          FakeRequest(POST, "/"+usuario+"/categoria").withFormUrlEncodedBody(("nombre","Categoria de pppppruebas"),("task_user",usuario))  
+          )
+
+        status(result) must equalTo(CREATED)  
+      }
+    }
+
       
 
 
